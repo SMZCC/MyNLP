@@ -40,7 +40,7 @@ def imgToGray(img):
         return img[:, :, 0] * 0.114 + img[:, :, 1] * 0.587 + img[:, :, 2] * 0.299
 
 
-def codesToSparseTensor(codes, batchSize=3):
+def codesToSparseTensorArgs(codes, batchSize=16):
     """序列标签 --> 稀疏张量
     args:
         codes: 2-dim,指的是一个batch的样本中每个样本与汉字的映射编码
@@ -52,15 +52,13 @@ def codesToSparseTensor(codes, batchSize=3):
         for j in range(len(codes[i])):
             idxs.append((i, j))
             values.append(codes[i][j])
-    print("idxs:", idxs)
-    print("values:", values)
     sparseTensorShape = (batchSize, codes.max(0)[1]+1)
-    return tf.SparseTensor(idxs, values, sparseTensorShape)
+    return idxs, values, sparseTensorShape
 
 
-def decodeToCodes(sparseTensor):
+def decodeToCodes(sparseTensorValue):
     """py3,sparseTensor ---> indices, values"""
-    idxs = sparseTensor[0]
+    idxs = sparseTensorValue[0]
     codes = []    # 每个样本的编码
     values = sparseTensorValue[1]   # [1, 2, 4, 5, 6, 7]
     numH = idxs.max(0)[0] + 1  # sparseTensor的height
@@ -86,10 +84,10 @@ if __name__ == "__main__":
     print("张莫:{}".format(encodes))
 
     codes = [[1, 2], [4], [5, 6, 7]]
-    sparseTensor = codesToSparseTensor(codes)
-    print("sparseTensor:\n", sparseTensor)
+    sparseTensorArgs = codesToSparseTensorArgs(codes, batchSize=3)
+    print("sparseTensor:\n", sparseTensorArgs)
     with tf.Session() as sess:
-        sparseTensorValue = sess.run(sparseTensor)
+        sparseTensorValue = sess.run(tf.SparseTensor(sparseTensorArgs[0], sparseTensorArgs[1], sparseTensorArgs[2]))
         decodes = decodeToCodes(sparseTensorValue)
         print("decodeToCodes:\n", decodes)
 

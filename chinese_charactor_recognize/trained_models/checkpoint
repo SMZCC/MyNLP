@@ -1,0 +1,2 @@
+model_checkpoint_path: "/media/smz/SMZ_WORKING_SPACE/MyNLP/chinese_charactor_recognize/trained_models/ZHModel.ckpt"
+all_model_checkpoint_paths: "/media/smz/SMZ_WORKING_SPACE/MyNLP/chinese_charactor_recognize/trained_models/ZHModel.ckpt"
