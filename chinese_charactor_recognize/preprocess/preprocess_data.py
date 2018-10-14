@@ -79,7 +79,7 @@ def clearCharData(dataPath):
     print("clear %d samples, remain %d samples" % (len(idxs), total - len(idxs)))
     print("clearCharDate:%d" % (len(clearData)))
 
-    with open("/media/smz/SMZ_WORKING_SPACE/MyNLP/chinese_charactor_recognize/data/clear_char_data.pkl", 'wb') as f:
+    with open("/media/smz/SMZ_WORKING_SPACE/MyNLP/chinese_charactor_recognize/data/char_data_cleared.pkl", 'wb') as f:
         pkl.dump(clearData, f)
 
 
@@ -135,19 +135,20 @@ def checkTrainData(dataPath):
 def checkZHDict(ZHDictPath):
     with open(ZHDictPath, 'rb') as f:
         zhDict = pkl.load(f)
-
+    print(zhDict.getAllChars())
     print(type(zhDict))
     print("len(zhDict):", len(zhDict))
 
 
 if __name__ == "__main__":
-    dataPath = "/media/smz/SMZ_WORKING_SPACE/MyNLP/chinese_charactor_recognize/data/clear_char_data.pkl"
+    dataPath = "/media/smz/SMZ_WORKING_SPACE/MyNLP/chinese_charactor_recognize/data/char_data.pkl"
     zhDictSavePath = '/media/smz/SMZ_WORKING_SPACE/MyNLP/chinese_charactor_recognize/data/zhDict.pkl'
+    clearedDataPath = "/media/smz/SMZ_WORKING_SPACE/MyNLP/chinese_charactor_recognize/data/char_data_cleared.pkl"
     # checkTrainData(dataPath)
     # clearCharData(dataPath)
     # constrackZHDict(dataPath, zhDictSavePath)
     # checkZHDict(zhDictSavePath)
-    splitData(dataPath)
+    # splitData(clearedDataPath)
     # findNone(dataPath)
 
 

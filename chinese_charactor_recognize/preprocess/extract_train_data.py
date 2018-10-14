@@ -34,7 +34,7 @@ def extractData(dataPath):
         train_data.append(sample)
 
     with open("./char_train_data.pkl", 'wb') as f:
-        pkl.dump(train_data, f)
+        pkl.dump(train_data, f, protocol=2)
 
 
 if __name__ == "__main__":
